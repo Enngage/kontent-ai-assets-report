@@ -1,0 +1,40 @@
+[
+  {
+    "sharedFilename": "BMW - Course.jpg",
+    "duplicateAssets": [
+      {
+        "id": "7e17fd12-ade4-4051-8572-a5c76054f5aa",
+        "title": "",
+        "codename": "bmw___course_jpg",
+        "filename": "BMW - Course.jpg",
+        "url": "https://assets-eu-01.kc-usercontent.com/2542ce4a-3be3-01e8-fdf0-ce1b87b58f11/5d2ed66d-b261-467d-b5d3-3a4f30f3a5bd/BMW%20-%20Course.jpg",
+        "appUrl": "https://app.kontent.ai/2542ce4a-3be3-01e8-fdf0-ce1b87b58f11/content-inventory/assets/asset/7e17fd12-ade4-4051-8572-a5c76054f5aa",
+        "usedIn": [
+          {
+            "element": "header_image",
+            "languageCodename": "default",
+            "itemCodename": "future_of_bmw_d2d59d6",
+            "itemName": "Future of BMW",
+            "typeCodename": "course_new"
+          },
+          {
+            "element": "header_image",
+            "languageCodename": "default",
+            "itemCodename": "future_of_bmw",
+            "itemName": "Future of BMW",
+            "typeCodename": "course_new"
+          }
+        ]
+      },
+      {
+        "id": "74e316e3-a1fd-44c7-86cd-0a01ddb1f24c",
+        "title": "",
+        "codename": "bmw___course_jpg_74e316e",
+        "filename": "BMW - Course.jpg",
+        "url": "https://assets-eu-01.kc-usercontent.com/2542ce4a-3be3-01e8-fdf0-ce1b87b58f11/01c9a91e-b638-4bd6-af06-cedb3f9d2db2/BMW%20-%20Course.jpg",
+        "appUrl": "https://app.kontent.ai/2542ce4a-3be3-01e8-fdf0-ce1b87b58f11/content-inventory/assets/asset/74e316e3-a1fd-44c7-86cd-0a01ddb1f24c",
+        "usedIn": []
+      }
+    ]
+  }
+]
