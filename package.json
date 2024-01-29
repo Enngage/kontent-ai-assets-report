@@ -1,0 +1,23 @@
+{
+  "name": "kontent-ai-assets-report",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "csv-writer": "1.6.0",
+    "@kontent-ai/management-sdk": "5.8.0",
+    "typescript": "5.3.3",
+    "ts-node": "10.9.2",
+    "striptags": "3.2.0",
+    "colors": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/striptags": "3.1.1"
+  }
+}
