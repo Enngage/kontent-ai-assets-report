@@ -11,13 +11,16 @@ import { name } from "./package.json";
 import {
   AssetModels,
   ContentItemModels,
+  ContentTypeElements,
   ContentTypeModels,
   ContentTypeSnippetModels,
+  ElementContracts,
+  ElementModels,
   LanguageModels,
   LanguageVariantModels,
 } from "@kontent-ai/management-sdk";
 
-const unsedAssetsCsvFilename = unusedAssetsFilename + ".csv";
+const unusedAssetsCsvFilename = unusedAssetsFilename + ".csv";
 const unusedAssetsJsonFilename = unusedAssetsFilename + ".json";
 const duplicateAssetsCsvFilename = duplicateAssetsFilename + ".csv";
 const duplicateAssetsJsonFilename = duplicateAssetsFilename + ".json";
@@ -131,7 +134,9 @@ const run = async () => {
   );
   console.log(
     `Found '${yellow(
-      duplicateAssets.length.toString()
+      duplicateAssets
+        .reduce((prev, current) => prev + current.assets.length, 0)
+        .toString()
     )}' instances of duplicate assets`
   );
 
@@ -264,9 +269,28 @@ function getAssetUsedIn(
       }
 
       const jsonValue = JSON.stringify(element.value);
+      let isUsedWithinElement: boolean = false;
       if (
         jsonValue?.toString()?.toLowerCase()?.includes(asset.id.toLowerCase())
       ) {
+        isUsedWithinElement = true;
+      } else {
+        const components = element.components;
+
+        if (components) {
+          const componentsJsonValue = JSON.stringify(components);
+          if (
+            componentsJsonValue
+              ?.toString()
+              ?.toLowerCase()
+              ?.includes(asset.id.toLowerCase())
+          ) {
+            isUsedWithinElement = true;
+          }
+        }
+      }
+
+      if (isUsedWithinElement) {
         // asset is used in this element
         usedIn.push({
           element: contentTypeElement.codename ?? "",
@@ -299,10 +323,20 @@ function getUnusedAssets(
     let assetUsed: boolean = false;
     for (const item of languageVariants) {
       for (const element of item.elements) {
-        if (element.value) {
-          const jsonValue = JSON.stringify(element.value);
+        const jsonValue = JSON.stringify(element.value ?? "");
+
+        if (
+          jsonValue?.toString()?.toLowerCase()?.includes(asset.id.toLowerCase())
+        ) {
+          assetUsed = true;
+        }
+
+        const components = element.components;
+
+        if (components) {
+          const componentsJsonValue = JSON.stringify(components);
           if (
-            jsonValue
+            componentsJsonValue
               ?.toString()
               ?.toLowerCase()
               ?.includes(asset.id.toLowerCase())
@@ -404,17 +438,23 @@ async function storeUnusedAssetsAsync(
   ];
 
   const csvWriter = createObjectCsvWriter({
-    path: unsedAssetsCsvFilename,
+    path: unusedAssetsCsvFilename,
     alwaysQuote: true,
     header: headers,
   });
 
   await csvWriter.writeRecords(unusedAssets);
-  console.log(`File '${yellow(unsedAssetsCsvFilename)}' successfully created`);
+  console.log(
+    `File '${yellow(unusedAssetsCsvFilename)}' with ${cyan(
+      unusedAssets.length.toString()
+    )} unused assets successfully created`
+  );
 
   await writeFile(unusedAssetsJsonFilename, JSON.stringify(unusedAssets));
   console.log(
-    `File '${yellow(unusedAssetsJsonFilename)}' successfully created`
+    `File '${yellow(unusedAssetsJsonFilename)}' with ${cyan(
+      unusedAssets.length.toString()
+    )} unused assets successfully created`
   );
 }
 
@@ -484,9 +524,16 @@ async function storeDuplicateAssetsAsync(
     header: headers,
   });
 
+  const duplicateAssetsCount = duplicateAssets.reduce(
+    (prev, current) => prev + current.assets.length,
+    0
+  );
+
   await csvWriter.writeRecords(duplicateAssetCsvRecords);
   console.log(
-    `File '${yellow(duplicateAssetsCsvFilename)}' successfully created`
+    `File '${yellow(duplicateAssetsCsvFilename)}' with ${cyan(
+      duplicateAssetsCount.toString()
+    )} duplicate instances successfully created`
   );
 
   await writeFile(
@@ -494,7 +541,9 @@ async function storeDuplicateAssetsAsync(
     JSON.stringify(duplicateAssetJsonRecords)
   );
   console.log(
-    `File '${yellow(duplicateAssetsJsonFilename)}' successfully created`
+    `File '${yellow(duplicateAssetsJsonFilename)}' with ${cyan(
+      duplicateAssetsCount.toString()
+    )} duplicate instances successfully created`
   );
 }
 
