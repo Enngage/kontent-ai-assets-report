@@ -5,4 +5,4 @@ To run script install node.js & with node.js command prompt navigate to script f
 `npm i`
 `npm start`
 
-CSV file will be created in the current folder.
+CSV & JSON files will be created in the current folder.
