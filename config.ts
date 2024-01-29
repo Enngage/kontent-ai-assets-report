@@ -1,7 +1,9 @@
 import { createManagementClient } from "@kontent-ai/management-sdk";
+import { environmentHelper } from "./environment-helper";
 
-export const environmentId: string = "";
-const apiKey: string = "";
+export const environmentId: string =
+  environmentHelper.getRequiredValue("ENVIRONMENT_ID");
+const apiKey: string = environmentHelper.getRequiredValue("MANAGEMENT_API_KEY");
 
 export const managementClient = createManagementClient({
   environmentId: environmentId,
