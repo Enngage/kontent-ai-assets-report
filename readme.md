@@ -1,6 +1,6 @@
 To configure App rename the `.env.template` to `.env` and fill in all keys.
 
-To run script install node.js & with node.js command prompt navigate to script folder and run:
+To run the script use:
 
 `npm i`
 `npm start`
